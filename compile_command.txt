@@ -1,0 +1,2 @@
+sudo g++ audio_example.cpp audioUtil.cpp -lSDL2
+
