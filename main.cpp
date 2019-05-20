@@ -1,20 +1,30 @@
 #include "audioUtil.h"
-
-std::string filePath = "/home/rafa/Escritorio/song2.wav";
-
+#include "dirReader.h"
+#include "StateCollection.h"
 
 int main (int argc, char** argv){
 
-  SDL_Init(SDL_INIT_AUDIO);
-  loadWavFile(filePath);
-  openDevice();
-  play();
+	//PlayingState playingState_{};
+	//PausedState pausedState_{};
 
-  while(audio.length > 0){
-  }
+	//currentState = &playingState_;
 
-  cleanWav();
-  closeDevice();
-  SDL_Quit();
-  return 0;
+	std::string dirPath = "/media/rafa";
+	DirReader::readDir(dirPath);
+	std::string filePath = "/home/rafa/Escritorio/song2.wav";
+
+	SDL_Init(SDL_INIT_AUDIO);
+	loadWavFile(filePath);
+	openDevice();
+	play();
+
+	bool running = true;
+	while(running){
+	}
+
+	cleanWav();
+	closeDevice();
+	SDL_Quit();
+	return 0;
 }
+

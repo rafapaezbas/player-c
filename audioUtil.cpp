@@ -55,10 +55,11 @@ void openDevice(){
 
 void play(){
   SDL_PauseAudioDevice(device,0);
+  std::cout << "Playing: " << std::endl;
 }
 
 void pause(){
-  SDL_PauseAudioDevice(device,0);
+  SDL_PauseAudioDevice(device,1);
 }
 
 void cleanWav(){
