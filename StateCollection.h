@@ -9,9 +9,9 @@ struct State{
 /**
  * Pointers will point to instances intialized in the main method
  */
-extern State* ptr_currentState = NULL;
-extern State* ptr_playingState = NULL;
-extern State* ptr_pausedState = NULL;
+extern State* ptr_currentState = nullptr;
+extern State* ptr_playingState = nullptr;
+extern State* ptr_pausedState = nullptr;
 
 struct PlayingState : State {
 	void playAction() override {
