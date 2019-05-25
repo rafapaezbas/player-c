@@ -20,7 +20,7 @@ std::string parser::getScript(std::string filePath){
 	std::string script = "";
 	while (input >> line)
 	{
-		script = script + line;
+		script = script  + " " + line;
 	}
 	return script;
 }

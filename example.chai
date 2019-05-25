@@ -1,2 +1,5 @@
-play("first play");
-play("second play");
+for(var i = 1; i < 10; ++i){
+	play("number");
+	wait(1000);
+}
+
