@@ -12,7 +12,7 @@ State state;
  * The definition of this functions will be "embdedded" in the chai interpreter;
  */
 void play_func(const std::string &t_name) {
-	PlayCommand* playCommand = new PlayCommand(t_name);
+	PlayCommand* playCommand = new PlayCommand(t_name,&state.deviceIsOpen);
 	state.commands.push_back(playCommand);	
 }
 
@@ -51,7 +51,6 @@ int main (int argc, char** argv){
 	state.commands.push_back(&endCommand);	
 
 	SDL_Init(SDL_INIT_AUDIO);
-	openDevice();
 
 	bool running = true;
 	int iterator = 0;

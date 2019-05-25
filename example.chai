@@ -1,1 +1,5 @@
+play("/home/rafa/Escritorio/song.wav");
+wait(2000);
+play("/home/rafa/Escritorio/song3.wav");
+wait(4000);
 play("/home/rafa/Escritorio/song2.wav");

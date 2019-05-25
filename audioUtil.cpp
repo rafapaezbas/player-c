@@ -13,7 +13,6 @@ SDL_AudioDeviceID device;
   This funtion is called as callback after SDL_PauseAudioDevice(device,0);
   */
 void myAudioCallback(void* userdata, Uint8* stream, int streamLength){
-	std::cout << "callback" << std::endl;
 	AudioData* audio = (AudioData*) userdata;
 	if(audio->length == 0){
 		return;
@@ -25,14 +24,13 @@ void myAudioCallback(void* userdata, Uint8* stream, int streamLength){
 	SDL_memcpy(stream,audio->pos,length);
 	audio->pos += length;
 	audio->length -= length; 
-
 }
 
 /**
   Loads a wav file given a path, fills sdl audio specs, a direction of pointer of an unsigned int8 (memory where file begins)
   and a direction of a unsigned int32 that is the file length,asign then the values to the struct created 
   */
-void loadWavFile(std::string filePath){
+void loadWavFile(std::string filePath,bool* deviceIsOpen){
 	if(SDL_LoadWAV(&filePath[0], &wavSpec, &wavStart, &wavLength) == NULL){
 		std::cerr << "Error " << filePath << " could not be lodaded as an audio file" << std::endl;
 		return;
@@ -41,6 +39,10 @@ void loadWavFile(std::string filePath){
 	audio.length = wavLength;
 	wavSpec.callback = myAudioCallback;
 	wavSpec.userdata = &audio;
+	if(!*deviceIsOpen){
+		openDevice();
+		*deviceIsOpen = true;
+	}
 	std::cout << "Loaded: " << filePath << std::endl;
 }
 
@@ -60,7 +62,7 @@ void play(){
 	std::cout << "Playing:" << std::endl;
 }
 
-void pause(){
+void audioutil_pause(){
 	SDL_PauseAudioDevice(device,1);
 }
 

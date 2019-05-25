@@ -6,6 +6,7 @@
 struct State {
 	std::vector<Command*> commands;
 	std::vector<Timer> timers;
+	bool deviceIsOpen = false;
 	bool wait = false;
 	bool end = false;
 	void runTimers(){

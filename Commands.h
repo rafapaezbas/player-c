@@ -12,14 +12,17 @@ struct Command {
 
 struct PlayCommand : Command {
 	std::string file;
+	bool* deviceIsOpen;
 
-	PlayCommand(std::string file_){
+	PlayCommand(std::string file_, bool* deviceIsOpen_){
 		file = file_;
+		deviceIsOpen = deviceIsOpen_;
 	}
 
 	void execute() override{
+		audioutil_pause();
 		cleanWav();
-		loadWavFile(file);
+		loadWavFile(file,deviceIsOpen);
 		play();
 	}
 };

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-void loadWavFile(std::string filePath);
+void loadWavFile(std::string filePath,bool* deviceIsOpen);
 void openDevice();
 void cleanWav();
 void closeDevice();
