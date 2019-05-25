@@ -4,9 +4,21 @@
 #include "timer.h"
 #include "State.h"
 #include "Commands.h"
+#include "chaiscript/chaiscript.hpp"
+
+std::string helloWorld(const std::string &t_name) {
+	return "Hello " + t_name + "!";
+}
 
 int main (int argc, char** argv){
-	State state;
+	chaiscript::ChaiScript chai;
+	chai.add(chaiscript::fun(&helloWorld), "helloWorld");
+
+	chai.eval(R"(
+	        puts(helloWorld("Bob"));
+		  )");
+
+		State state;
 
 	PlayCommand playCommand = PlayCommand("/home/rafa/Escritorio/song.wav");
 	EndCommand endCommand = EndCommand(&state.end);

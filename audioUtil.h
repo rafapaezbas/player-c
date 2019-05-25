@@ -9,7 +9,7 @@ void openDevice();
 void cleanWav();
 void closeDevice();
 void play();
-void pause();
+void audioutil_pause();
 
 struct AudioData {
 	Uint8* pos;

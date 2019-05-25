@@ -1,3 +1,4 @@
-sudo g++ *.cpp -lSDL2 -lstdc++fs
+sudo g++ *.cpp -lSDL2 -lstdc++fs -ldl -lpthread
+
 
 
