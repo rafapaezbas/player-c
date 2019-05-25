@@ -21,6 +21,18 @@ void wait_func(const int &t_time) {
 	state.commands.push_back(waitCommand);	
 }
 
+std::string random_wav_from_func(const std::string &t_path) {
+	std::vector<std::string> paths = dir::readDir(t_path);
+	//Keep looping until wav file found
+	while(true){
+		std::string path = paths.at(rand() % paths.size());
+		std::size_t found = path.find(".wav");
+		if (found != std::string::npos){
+			return path;
+		}
+	}
+}
+
 int main (int argc, char** argv){
 
 
@@ -28,6 +40,7 @@ int main (int argc, char** argv){
 	chaiscript::ChaiScript chai;
 	chai.add(chaiscript::fun(&play_func), "play");
 	chai.add(chaiscript::fun(&wait_func), "wait");
+	chai.add(chaiscript::fun(&random_wav_from_func), "randomWavFrom");
 
 	//interpret chai script
 	std::string script = parser::getScript("/home/rafa/Escritorio/sdl_tutorial/example.chai");

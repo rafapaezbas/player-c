@@ -13,6 +13,7 @@ SDL_AudioDeviceID device;
   This funtion is called as callback after SDL_PauseAudioDevice(device,0);
   */
 void myAudioCallback(void* userdata, Uint8* stream, int streamLength){
+	std::cout << "callback" << std::endl;
 	AudioData* audio = (AudioData*) userdata;
 	if(audio->length == 0){
 		return;
@@ -56,7 +57,7 @@ void openDevice(){
 
 void play(){
 	SDL_PauseAudioDevice(device,0);
-	std::cout << "Playing: " << std::endl;
+	std::cout << "Playing:" << std::endl;
 }
 
 void pause(){

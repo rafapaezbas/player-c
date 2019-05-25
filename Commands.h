@@ -18,10 +18,9 @@ struct PlayCommand : Command {
 	}
 
 	void execute() override{
-		//cleanWav();
-		//loadWavFile(file);
-		//play();
-		std::cout << "Played: " + file << std::endl;
+		cleanWav();
+		loadWavFile(file);
+		play();
 	}
 };
 

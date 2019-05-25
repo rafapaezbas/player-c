@@ -1,8 +1,6 @@
 #include <experimental/filesystem>
 #include <iostream>  
 
-class DirReader{
-	public:
-		DirReader();
-		static void readDir(std::string path);
-};
+namespace dir {
+	std::vector<std::string> readDir(std::string path);
+}

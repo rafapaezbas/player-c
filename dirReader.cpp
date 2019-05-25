@@ -2,8 +2,10 @@
 
 namespace fs = std::experimental::filesystem;
 
-void DirReader::readDir(std::string path){
+std::vector<std::string> dir::readDir(std::string path){
+	std::vector<std::string> paths;
 	for (auto entry : fs::recursive_directory_iterator("/media/rafa")){
-		std::cout << entry.path() << std::endl;
+		paths.push_back(entry.path());
 	}
+	return paths;
 }
