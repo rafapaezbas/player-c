@@ -6,25 +6,35 @@
 #include "Commands.h"
 #include "chaiscript/chaiscript.hpp"
 
-std::string helloWorld(const std::string &t_name) {
-	return "Hello " + t_name + "!";
+State state;
+
+/**
+ * The definition of this functions will be "embdedded" in the chai interpreter;
+ */
+void play_func(const std::string &t_name) {
+	PlayCommand* playCommand = new PlayCommand(t_name);
+	state.commands.push_back(playCommand);	
+}
+
+void wait_func(const int &t_time) {
+	WaitCommand* waitCommand = new WaitCommand(&state.timers,&state.wait,t_time);
+	state.commands.push_back(waitCommand);	
 }
 
 int main (int argc, char** argv){
+
+
+	//add functions to chai engine
 	chaiscript::ChaiScript chai;
-	chai.add(chaiscript::fun(&helloWorld), "helloWorld");
+	chai.add(chaiscript::fun(&play_func), "play");
+	chai.add(chaiscript::fun(&wait_func), "wait");
 
-	chai.eval(R"(
-	        puts(helloWorld("Bob"));
-		  )");
+	//interpret chai script
+	std::string script = parser::getScript("/home/rafa/Escritorio/sdl_tutorial/example.chai");
+	chai(script);
 
-		State state;
-
-	PlayCommand playCommand = PlayCommand("/home/rafa/Escritorio/song.wav");
+	//Always add the end command as the last command
 	EndCommand endCommand = EndCommand(&state.end);
-	WaitCommand waitCommand = WaitCommand(&state.timers,&state.wait,5000);
-	state.commands.push_back(&playCommand);	
-	state.commands.push_back(&waitCommand);	
 	state.commands.push_back(&endCommand);	
 
 	SDL_Init(SDL_INIT_AUDIO);
