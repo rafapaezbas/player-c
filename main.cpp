@@ -10,7 +10,9 @@ int main (int argc, char** argv){
 
 	PlayCommand playCommand = PlayCommand("/home/rafa/Escritorio/song.wav");
 	EndCommand endCommand = EndCommand(&state.end);
+	WaitCommand waitCommand = WaitCommand(&state.timers,&state.wait,5000);
 	state.commands.push_back(&playCommand);	
+	state.commands.push_back(&waitCommand);	
 	state.commands.push_back(&endCommand);	
 
 	SDL_Init(SDL_INIT_AUDIO);
@@ -22,7 +24,9 @@ int main (int argc, char** argv){
 		while(!state.wait && !state.end){
 			state.commands.at(iterator)->execute();
 			iterator++;
+			state.runTimers();
 		}
+		state.runTimers();
 	}
 
 	cleanWav();
@@ -30,4 +34,5 @@ int main (int argc, char** argv){
 	SDL_Quit();
 	return 0;
 }
+
 
