@@ -11,8 +11,8 @@ State state;
 /**
  * The definition of this functions will be "embdedded" in the chai interpreter;
  */
-void play_func(const std::string &t_name) {
-	PlayCommand* playCommand = new PlayCommand(t_name,&state.deviceIsOpen);
+void play_func(const std::string &t_name,int channel) {
+	PlayCommand* playCommand = new PlayCommand(t_name,&state.deviceIsOpen,channel);
 	state.commands.push_back(playCommand);	
 }
 
@@ -34,8 +34,8 @@ std::string random_wav_from_func(const std::string &t_path) {
 }
 
 int main (int argc, char** argv){
-
-
+	
+	
 	//add functions to chai engine
 	chaiscript::ChaiScript chai;
 	chai.add(chaiscript::fun(&play_func), "play");
@@ -45,7 +45,7 @@ int main (int argc, char** argv){
 	//interpret chai script
 	std::string script = parser::getScript("/home/rafa/Escritorio/sdl_tutorial/example.chai");
 	chai(script);
-
+	
 	//Always add the end command as the last command
 	EndCommand endCommand = EndCommand(&state.end);
 	state.commands.push_back(&endCommand);	
@@ -63,8 +63,8 @@ int main (int argc, char** argv){
 		state.runTimers();
 	}
 
-	cleanWav();
-	closeDevice();
+	cleanChunks();
+	Mix_CloseAudio();
 	SDL_Quit();
 	return 0;
 }

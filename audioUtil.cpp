@@ -1,76 +1,41 @@
 #include "audioUtil.h" 
 
+Mix_Chunk* channels[2];
 
-AudioData audio;
-
-SDL_AudioSpec wavSpec;
-Uint8* wavStart;
-Uint32 wavLength;
-
-SDL_AudioDeviceID device;
-
-/**
-  This funtion is called as callback after SDL_PauseAudioDevice(device,0);
-  */
-void myAudioCallback(void* userdata, Uint8* stream, int streamLength){
-	AudioData* audio = (AudioData*) userdata;
-	if(audio->length == 0){
-		return;
-	}
-	Uint32 length = (Uint32) streamLength;
-	length = (length > audio->length ? audio->length: length);
-
-	//Copy to buffer from audio pos, given length
-	SDL_memcpy(stream,audio->pos,length);
-	audio->pos += length;
-	audio->length -= length; 
-}
-
-/**
-  Loads a wav file given a path, fills sdl audio specs, a direction of pointer of an unsigned int8 (memory where file begins)
-  and a direction of a unsigned int32 that is the file length,asign then the values to the struct created 
-  */
-void loadWavFile(std::string filePath,bool* deviceIsOpen){
-	if(SDL_LoadWAV(&filePath[0], &wavSpec, &wavStart, &wavLength) == NULL){
-		std::cerr << "Error " << filePath << " could not be lodaded as an audio file" << std::endl;
-		return;
-	}
-	audio.pos = wavStart;
-	audio.length = wavLength;
-	wavSpec.callback = myAudioCallback;
-	wavSpec.userdata = &audio;
+void loadWavFile(std::string filePath,int channel, bool* deviceIsOpen){
 	if(!*deviceIsOpen){
 		openDevice();
 		*deviceIsOpen = true;
 	}
-	std::cout << "Loaded: " << filePath << std::endl;
-}
-
-/**
-  Open default soudn device, pass wavSpec to check compatibility
-  */
-void openDevice(){
-	device = SDL_OpenAudioDevice(NULL,0,&wavSpec,NULL,SDL_AUDIO_ALLOW_ANY_CHANGE);
-	if(device == 0){
-		std::cerr << SDL_GetError() << std::endl;
-		return;
+	channels[channel] = Mix_LoadWAV(filePath.c_str()); //Convert it to *cons char*
+	if (channels[channel] == NULL){
+		std::cout << "Could not load the file: " + filePath << std::endl;
 	}
 }
 
-void play(){
-	SDL_PauseAudioDevice(device,0);
-	std::cout << "Playing:" << std::endl;
+void openDevice(){
+	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ){
+		return;    
+	}
 }
 
-void audioutil_pause(){
-	SDL_PauseAudioDevice(device,1);
+void play(int channel){
+	Mix_PlayChannel(channel, channels[channel], channel);
 }
 
-void cleanWav(){
-	SDL_FreeWAV(wavStart);
+void audioutil_pause(int channel){
+	if(Mix_Playing(channel)){
+		Mix_Pause(channel);
+	}
 }
 
-void closeDevice(){
-	SDL_CloseAudioDevice(device);
+void cleanChunk(int channel){
+	Mix_FreeChunk(channels[channel]);
 }
+
+void cleanChunks(){
+	Mix_FreeChunk(channels[0]);
+	Mix_FreeChunk(channels[1]);
+}
+
 

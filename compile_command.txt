@@ -1,4 +1,1 @@
-sudo g++ *.cpp -lSDL2 -lstdc++fs -ldl -lpthread
-
-
-
+sudo g++ *.cpp -lSDL2 -lstdc++fs -ldl -lpthread -lSDL_mixer

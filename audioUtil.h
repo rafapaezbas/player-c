@@ -3,19 +3,13 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "SDL2/SDL_mixer.h"
 
-void loadWavFile(std::string filePath,bool* deviceIsOpen);
+void loadWavFile(std::string filePath,int channel,bool* deviceIsOpen);
 void openDevice();
-void cleanWav();
-void closeDevice();
-void play();
-void audioutil_pause();
-
-struct AudioData {
-	Uint8* pos;
-	Uint32 length;
-};
-
-extern AudioData audio;
+void cleanChunk(int channel);
+void cleanChunks();
+void play(int channel);
+void audioutil_pause(int channel);
 
 #endif

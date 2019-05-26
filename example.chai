@@ -1,5 +1,7 @@
 for(var i = 0; i < 200; ++i){
-	var song = randomWavFrom("/media/rafa");
-	play(song);
+	var song1 = randomWavFrom("/media/rafa");
+	play(song1,0);
+	var song2 = randomWavFrom("/media/rafa");
+	play(song2,1);
 	wait(4000);
 }
