@@ -30,6 +30,28 @@ struct PlayCommand : Command {
 	}
 };
 
+struct FadeInCommand : Command {
+	std::string file;
+	bool* deviceIsOpen;
+	int channel;
+	int time;
+
+	FadeInCommand(std::string file_, bool* deviceIsOpen_,int channel_, int time_){
+		file = file_;
+		deviceIsOpen = deviceIsOpen_;
+		channel = channel_;
+		time = time_;
+	}
+
+	void execute() override{
+		audioutil_pause(channel);
+		cleanChunk(channel);
+		loadWavFile(file,channel,deviceIsOpen);
+		fadeIn(channel,time);
+		std::cout << "Fading in: " + file << std::endl;
+	}
+};
+
 struct EndCommand : Command {
 	bool* end;
 

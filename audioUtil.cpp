@@ -20,7 +20,11 @@ void openDevice(){
 }
 
 void play(int channel){
-	Mix_PlayChannel(channel, channels[channel], channel);
+	Mix_PlayChannel(channel, channels[channel], 0);
+}
+
+void fadeIn(int channel, int time){
+	Mix_FadeInChannel(channel, channels[channel], 0, time);
 }
 
 void audioutil_pause(int channel){
