@@ -1,2 +1,9 @@
-fadeIn("/home/rafa/Escritorio/song.wav",0,2000);
-wait(6000);
+for(var i = 0; i < 15; ++i) {
+	var song1 = randomWavFrom("/media/rafa");
+	fadeIn(song1,0,2000);
+	wait(4000);
+	fadeOut(0,2000);
+	wait(4000);
+}
+//	fadeOut(0,2000);
+//	wait(2000);

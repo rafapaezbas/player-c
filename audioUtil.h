@@ -11,6 +11,7 @@ void cleanChunk(int channel);
 void cleanChunks();
 void play(int channel);
 void fadeIn(int channel,int time);
+void fadeOut(int channel,int time);
 void audioutil_pause(int channel);
 
 #endif

@@ -27,6 +27,10 @@ void fadeIn(int channel, int time){
 	Mix_FadeInChannel(channel, channels[channel], 0, time);
 }
 
+void fadeOut(int channel, int time){
+	Mix_FadeOutChannel(channel, time);
+}
+
 void audioutil_pause(int channel){
 	if(Mix_Playing(channel)){
 		Mix_Pause(channel);

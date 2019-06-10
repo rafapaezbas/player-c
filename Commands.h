@@ -48,7 +48,20 @@ struct FadeInCommand : Command {
 		cleanChunk(channel);
 		loadWavFile(file,channel,deviceIsOpen);
 		fadeIn(channel,time);
-		std::cout << "Fading in: " + file << std::endl;
+	}
+};
+
+struct FadeOutCommand : Command {
+	int channel;
+	int time;
+
+	FadeOutCommand(int channel_, int time_){
+		channel = channel_;
+		time = time_;
+	}
+
+	void execute() override{
+		fadeOut(channel,time);
 	}
 };
 

@@ -21,6 +21,11 @@ void fadeIn_func(const std::string &t_name,int channel, int time) {
 	state.commands.push_back(fadeInCommand);	
 }
 
+void fadeOut_func(int channel, int time) {
+	FadeOutCommand* fadeOutCommand = new FadeOutCommand(channel, time);
+	state.commands.push_back(fadeOutCommand);	
+}
+
 void wait_func(const int &t_time) {
 	WaitCommand* waitCommand = new WaitCommand(&state.timers,&state.wait,t_time);
 	state.commands.push_back(waitCommand);	
@@ -44,6 +49,7 @@ int main (int argc, char** argv){
 	chaiscript::ChaiScript chai;
 	chai.add(chaiscript::fun(&play_func), "play");
 	chai.add(chaiscript::fun(&fadeIn_func), "fadeIn");
+	chai.add(chaiscript::fun(&fadeOut_func), "fadeOut");
 	chai.add(chaiscript::fun(&wait_func), "wait");
 	chai.add(chaiscript::fun(&random_wav_from_func), "randomWavFrom");
 
