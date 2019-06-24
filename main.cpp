@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "State.h"
 #include "Commands.h"
+#include "wavReader.h"
 #include "chaiscript/chaiscript.hpp"
 
 State state;
@@ -31,6 +32,10 @@ void wait_func(const int &t_time) {
 	state.commands.push_back(waitCommand);	
 }
 
+int get_duration_func(const std::string &t_path){
+	return durationInSeconds(t_path);
+}
+
 std::string random_wav_from_func(const std::string &t_path) {
 	std::vector<std::string> paths = dir::readDir(t_path);
 	//Keep looping until wav file found
@@ -52,6 +57,7 @@ int main (int argc, char** argv){
 	chai.add(chaiscript::fun(&fadeOut_func), "fadeOut");
 	chai.add(chaiscript::fun(&wait_func), "wait");
 	chai.add(chaiscript::fun(&random_wav_from_func), "randomWavFrom");
+	chai.add(chaiscript::fun(&get_duration_func), "getDuration");
 
 	//interpret chai script
 	std::string script = parser::getScript(argv[1]);

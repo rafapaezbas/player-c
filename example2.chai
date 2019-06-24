@@ -1,0 +1,4 @@
+var d = getDuration("/home/rafa/Escritorio/song.wav");
+play("/home/rafa/Escritorio/song.wav",0);
+wait(d);
+play("/home/rafa/Escritorio/song2.wav",0);
