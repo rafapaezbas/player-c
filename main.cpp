@@ -49,7 +49,10 @@ std::string random_wav_from_func(const std::string &t_path) {
 }
 
 int main (int argc, char** argv){
-	
+
+	//Reset random seed
+	srand (time(NULL));
+
 	//add functions to chai engine
 	chaiscript::ChaiScript chai;
 	chai.add(chaiscript::fun(&play_func), "play");

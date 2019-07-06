@@ -1,7 +1,5 @@
 for(var i = 0; i < 15; ++i) {
-	fadeOut(i%2,2000);
-	wait(4000);
 	var song1 = randomWavFrom("/media/rafa");
-	fadeIn(song1,i%2,2000);
+	play(song1,0);
 	wait(4000);
 }
